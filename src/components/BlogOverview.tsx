@@ -2,7 +2,8 @@
 
 import AddNewBlog from "@/components/add-new-blog/add-new-blog";
 import ShowAllBlogs from "@/components/show-all-blog/show-all-blog";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const initialBlogFormData = {
     title: "",
@@ -13,6 +14,12 @@ const BlogOverview = ({ blogsData }: { blogsData: any }) => {
     const [openDialog, setOpenDialog] = useState(false);
     const [loading, setLoading] = useState(false);
     const [blogFormData, setBlogFormData] = useState(initialBlogFormData);
+
+    // For refreshing the listing
+    const router = useRouter();
+    useEffect(() => {
+        router.refresh();
+    }, []);
 
     async function handleSaveBlogData() {
         setLoading(true);
@@ -26,6 +33,7 @@ const BlogOverview = ({ blogsData }: { blogsData: any }) => {
                 setLoading(false);
                 setOpenDialog(false);
                 setBlogFormData(initialBlogFormData);
+                router.refresh();
             }
         } catch (error) {
             console.log(error);

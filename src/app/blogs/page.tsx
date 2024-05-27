@@ -19,7 +19,6 @@ async function getAllBlogs() {
 
 const BlogListing = async () => {
     const blogsData = await getAllBlogs();
-    console.log(blogsData);
 
     return (
         <>
