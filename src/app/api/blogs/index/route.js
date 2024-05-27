@@ -8,7 +8,6 @@ export async function GET(req) {
 
         // Get data from Database
         const blogs = await Blog.find({});
-        console.log(blogs);
         if (blogs) {
             return NextResponse.json({
                 success: true,

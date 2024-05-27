@@ -41,6 +41,7 @@ const BlogOverview = ({ blogsData }: { blogsData: any }) => {
             setBlogFormData(initialBlogFormData);
         }
     }
+
     return (
         <>
             <div className="min-h-screen flex justify-center flex-col gap-10 items-center bg-gradient-to-r from-purple-600 to-blue-400 p-5">
