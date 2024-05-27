@@ -1,9 +1,9 @@
 "use client";
 
 import AddNewBlog from "@/components/add-new-blog/add-new-blog";
-import ShowAllBlogs from "@/components/show-all-blog/show-all-blog";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import ShowAllBlogs from "./show-all-blog/show-all-blog";
 
 const initialBlogFormData = {
     title: "",
@@ -54,10 +54,11 @@ const BlogOverview = ({ blogsData }: { blogsData: any }) => {
                     initialBlogFormData={initialBlogFormData}
                     handleSaveBlogData={handleSaveBlogData}
                 />
+
                 <h2 className="text-4xl text-white font-bold mb-4">
                     All Blogs
                 </h2>
-                <ShowAllBlogs blogsData={blogsData} />
+                <ShowAllBlogs blogsData={blogsData} router={router} />
             </div>
         </>
     );

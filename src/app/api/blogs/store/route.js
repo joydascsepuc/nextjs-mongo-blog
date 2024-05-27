@@ -39,13 +39,13 @@ export async function POST(req) {
 
         // Default error / message if not created!
         return NextResponse.json({
-            success: false,
+            status: false,
             message: "Something went wrong! Please try again!",
         });
     } catch (error) {
         console.log(error);
         return NextResponse.json({
-            success: false,
+            status: false,
             message: "Something went wrong! Please try again!",
         });
     }

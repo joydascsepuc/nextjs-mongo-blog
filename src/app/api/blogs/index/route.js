@@ -10,20 +10,20 @@ export async function GET(req) {
         const blogs = await Blog.find({});
         if (blogs) {
             return NextResponse.json({
-                success: true,
+                status: true,
                 data: blogs,
             });
         }
 
         // Default error / message if not created!
         return NextResponse.json({
-            success: false,
+            status: false,
             message: "Something went wrong! Please try again!",
         });
     } catch (error) {
         console.log(error);
         return NextResponse.json({
-            success: false,
+            status: false,
             message: "Something went wrong! Please try again!",
         });
     }

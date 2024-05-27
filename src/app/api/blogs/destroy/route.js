@@ -12,14 +12,15 @@ export async function DELETE(req) {
 
         if (!getCurrentBlogID) {
             return NextResponse.json({
-                success: false,
+                status: false,
                 message: "Invalid blog ID",
             });
         }
 
         const deleteBlog = await Blog.findByIdAndDelete(getCurrentBlogID);
+        console.log(deleteBlog);
         if (deleteBlog) {
-            return NextResponse({
+            return NextResponse.json({
                 status: true,
                 message: "Blog deleted!",
             });
@@ -27,13 +28,13 @@ export async function DELETE(req) {
 
         // Default error / message if not created!
         return NextResponse.json({
-            success: false,
+            status: false,
             message: "Something went wrong! Please try again!",
         });
     } catch (error) {
         console.log(error);
         return NextResponse.json({
-            success: false,
+            status: false,
             message: "Something went wrong! Please try again!",
         });
     }

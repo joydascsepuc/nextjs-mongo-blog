@@ -19,7 +19,7 @@ const ShowAllBlogs = ({
                 method: "DELETE",
             });
             const result = await apiResponse.json();
-            if (result.status) {
+            if (result?.status) {
                 router.refresh();
             }
             return result?.status;
@@ -28,6 +28,7 @@ const ShowAllBlogs = ({
             router.refresh();
         }
     };
+
     return (
         <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-5">
@@ -55,7 +56,7 @@ const ShowAllBlogs = ({
                         );
                     })
                 ) : (
-                    <p>No data!</p>
+                    <p className="text-4xl text-center">No data!</p>
                 )}
             </div>
         </>
