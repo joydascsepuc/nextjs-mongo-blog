@@ -14,6 +14,7 @@ const BlogOverview = ({ blogsData }: { blogsData: any }) => {
     const [openDialog, setOpenDialog] = useState(false);
     const [loading, setLoading] = useState(false);
     const [blogFormData, setBlogFormData] = useState(initialBlogFormData);
+    const [currentEditedBlogID, setCurrentEditedBlogID] = useState(null);
 
     // For refreshing the listing
     const router = useRouter();
@@ -24,23 +25,39 @@ const BlogOverview = ({ blogsData }: { blogsData: any }) => {
     async function handleSaveBlogData() {
         setLoading(true);
         try {
-            const apiResponse = await fetch("/api/blogs/store", {
-                method: "POST",
-                body: JSON.stringify(blogFormData),
-            });
+            const apiResponse = currentEditedBlogID
+                ? await fetch(`/api/blogs/update?id=${currentEditedBlogID}`, {
+                      method: "PUT",
+                      body: JSON.stringify(blogFormData),
+                  })
+                : await fetch("/api/blogs/store", {
+                      method: "POST",
+                      body: JSON.stringify(blogFormData),
+                  });
             const result = await apiResponse.json();
             if (result?.status) {
                 setLoading(false);
                 setOpenDialog(false);
                 setBlogFormData(initialBlogFormData);
+                setCurrentEditedBlogID(null);
                 router.refresh();
             }
         } catch (error) {
             console.log(error);
             setLoading(false);
             setBlogFormData(initialBlogFormData);
+            setCurrentEditedBlogID(null);
         }
     }
+
+    const handleEdit = (currentBlog: any) => {
+        setCurrentEditedBlogID(currentBlog?._id);
+        setBlogFormData({
+            title: currentBlog?.title,
+            description: currentBlog?.description,
+        });
+        setOpenDialog(true);
+    };
 
     return (
         <>
@@ -53,12 +70,18 @@ const BlogOverview = ({ blogsData }: { blogsData: any }) => {
                     setBlogFormData={setBlogFormData}
                     initialBlogFormData={initialBlogFormData}
                     handleSaveBlogData={handleSaveBlogData}
+                    currentEditedBlogID={currentEditedBlogID}
+                    setCurrentEditedBlogID={setCurrentEditedBlogID}
                 />
 
                 <h2 className="text-4xl text-white font-bold mb-4">
                     All Blogs
                 </h2>
-                <ShowAllBlogs blogsData={blogsData} router={router} />
+                <ShowAllBlogs
+                    blogsData={blogsData}
+                    router={router}
+                    handleEdit={handleEdit}
+                />
             </div>
         </>
     );

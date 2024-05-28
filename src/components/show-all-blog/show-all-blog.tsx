@@ -9,9 +9,11 @@ import { Button } from "../ui/button";
 const ShowAllBlogs = ({
     blogsData,
     router,
+    handleEdit,
 }: {
     blogsData: any;
     router: any;
+    handleEdit: any;
 }) => {
     const handleDeleteBlogByID = async (blogID: string) => {
         try {
@@ -42,7 +44,11 @@ const ShowAllBlogs = ({
                                         {blog.description}
                                     </CardDescription>
                                     <div className="mt-5 flex gap-5 justify-center items-center">
-                                        <Button>Edit</Button>
+                                        <Button
+                                            onClick={() => handleEdit(blog)}
+                                        >
+                                            Edit
+                                        </Button>
                                         <Button
                                             onClick={() => {
                                                 handleDeleteBlogByID(blog._id);
